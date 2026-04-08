@@ -32,6 +32,17 @@ html.light {
 
 html.light #starCanvas { display: none; }
 
+/* Sinastría: sobreescribir fondos hardcodeados */
+html.light .synastry-central {
+  background: linear-gradient(135deg, rgba(107,91,149,0.12), rgba(232,226,212,1)) !important;
+}
+html.light .synastry-union {
+  background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(232,226,212,1)) !important;
+}
+html.light .synastry-discord {
+  background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(232,226,212,1)) !important;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

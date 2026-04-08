@@ -11,7 +11,7 @@ import { synastryConnections, synastryTensions } from '../data/synastry';
     </div>
 
     <!-- Central tension note -->
-    <div class="card mb-12 text-center border-nebula-purple/40 glow-purple max-w-2xl mx-auto"
+    <div class="card synastry-central mb-12 text-center border-nebula-purple/40 glow-purple max-w-2xl mx-auto"
          style="background: linear-gradient(135deg, rgba(107,91,149,0.1), rgba(13,13,43,0.8))">
       <div class="text-nebula-purple text-xs font-mono uppercase tracking-widest mb-3">Tensión central</div>
       <h3 class="font-serif text-2xl text-star-white mb-3">☉ Cáncer ←→ ☉ Sagitario</h3>
@@ -32,7 +32,7 @@ import { synastryConnections, synastryTensions } from '../data/synastry';
         </div>
         <div class="space-y-4">
           {synastryConnections.map((conn) => (
-            <div class="card border-emerald-900/40 hover:border-emerald-500/30 transition-all duration-300"
+            <div class="card synastry-union border-emerald-900/40 hover:border-emerald-500/30 transition-all duration-300"
                  style="background: linear-gradient(135deg, rgba(16,185,129,0.04), rgba(13,13,43,0.8))">
               <div class="flex items-start gap-3">
                 <span class="text-emerald-400 text-2xl mt-0.5">{conn.icon}</span>
@@ -56,7 +56,7 @@ import { synastryConnections, synastryTensions } from '../data/synastry';
         </div>
         <div class="space-y-4">
           {synastryTensions.map((tension) => (
-            <div class="card border-red-900/30 hover:border-red-500/20 transition-all duration-300"
+            <div class="card synastry-discord border-red-900/30 hover:border-red-500/20 transition-all duration-300"
                  style="background: linear-gradient(135deg, rgba(239,68,68,0.04), rgba(13,13,43,0.8))">
               <div class="flex items-start gap-3">
                 <span class="text-red-400 text-2xl mt-0.5 font-mono">{tension.icon}</span>
