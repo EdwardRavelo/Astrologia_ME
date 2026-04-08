@@ -5,19 +5,19 @@ export default {
     extend: {
       colors: {
         'space': {
-          950: '#050510',
-          800: '#0d0d2b',
-          700: '#161640',
+          950: 'rgb(var(--color-bg-950) / <alpha-value>)',
+          800: 'rgb(var(--color-bg-800) / <alpha-value>)',
+          700: 'rgb(var(--color-bg-700) / <alpha-value>)',
         },
         'gold': {
-          300: '#e8c96b',
-          400: '#c9a227',
+          300: 'rgb(var(--color-gold-300) / <alpha-value>)',
+          400: 'rgb(var(--color-gold-400) / <alpha-value>)',
         },
         'silver': {
-          300: '#a8b2c8',
+          300: 'rgb(var(--color-silver-300) / <alpha-value>)',
         },
-        'star-white': '#e8e0d5',
-        'nebula-purple': '#6b5b95',
+        'star-white': 'rgb(var(--color-text) / <alpha-value>)',
+        'nebula-purple': 'rgb(var(--color-nebula-purple) / <alpha-value>)',
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],

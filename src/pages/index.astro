@@ -47,6 +47,14 @@ import '../styles/global.css';
             </a>
           ))}
         </div>
+        <!-- Theme toggle -->
+        <button
+          id="themeToggle"
+          aria-label="Cambiar tema"
+          class="text-silver-300 hover:text-gold-300 transition-colors duration-200 text-base leading-none"
+        >
+          <span id="themeIcon">☀</span>
+        </button>
         <!-- Mobile menu button -->
         <button
           id="mobileMenuBtn"
@@ -153,6 +161,24 @@ import '../styles/global.css';
     </footer>
 
     <script>
+      // Theme toggle
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+
+      function applyTheme(light: boolean) {
+        html.classList.toggle('light', light);
+        if (themeIcon) themeIcon.textContent = light ? '☽' : '☀';
+      }
+
+      const saved = localStorage.getItem('theme');
+      applyTheme(saved === 'light');
+
+      document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const isLight = html.classList.contains('light');
+        localStorage.setItem('theme', isLight ? 'dark' : 'light');
+        applyTheme(!isLight);
+      });
+
       // Mobile menu toggle
       const btn = document.getElementById('mobileMenuBtn');
       const menu = document.getElementById('mobileMenu');

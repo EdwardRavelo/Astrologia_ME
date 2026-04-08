@@ -4,6 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme tokens ─────────────────────────────────────────── */
+:root {
+  --color-bg-950:      5 5 16;
+  --color-bg-800:      13 13 43;
+  --color-bg-700:      22 22 64;
+  --color-text:        232 224 213;
+  --color-silver-300:  168 178 200;
+  --color-gold-300:    232 201 107;
+  --color-gold-400:    201 162 39;
+  --color-nebula-purple: 107 91 149;
+}
+
+html.light {
+  --color-bg-950:     242 236 224;
+  --color-bg-800:     232 226 212;
+  --color-bg-700:     207 200 184;
+  --color-text:       44 36 22;
+  --color-silver-300: 122 110 94;
+}
+
+html.light #starCanvas { display: none; }
+
 @layer base {
   html {
     scroll-behavior: smooth;
