@@ -17,11 +17,17 @@
 }
 
 html.light {
-  --color-bg-950:     242 236 224;
-  --color-bg-800:     232 226 212;
-  --color-bg-700:     207 200 184;
-  --color-text:       44 36 22;
-  --color-silver-300: 122 110 94;
+  /* Backgrounds */
+  --color-bg-950:       242 236 224;   /* #f2ece0 cream */
+  --color-bg-800:       232 226 212;   /* #e8e2d4 card  */
+  --color-bg-700:       207 200 184;   /* #cfc8b8 border */
+  /* Text */
+  --color-text:         44 36 22;      /* #2c2416  ~13:1 ✓ */
+  --color-silver-300:   92 80 70;      /* #5c5046   ~6:1 ✓ */
+  /* Accents — darkened for legibility on cream */
+  --color-gold-300:     125 92 0;      /* #7d5c00   ~5:1 ✓ */
+  --color-gold-400:     107 79 0;      /* #6b4f00  ~6.2:1 ✓ */
+  --color-nebula-purple: 74 56 128;    /* #4a3880  ~7.8:1 ✓ */
 }
 
 html.light #starCanvas { display: none; }
