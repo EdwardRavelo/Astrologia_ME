@@ -1,0 +1,113 @@
+---
+import { events2026 } from '../data/events2026';
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+function parseDate(s: string) {
+  return new Date(s + 'T00:00:00');
+}
+
+function formatDate(s: string) {
+  const d = parseDate(s);
+  return d.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' });
+}
+
+type EventStatus = 'past' | 'current' | 'upcoming';
+
+function getStatus(event: (typeof events2026)[0]): EventStatus {
+  const start = parseDate(event.date);
+  const end = event.dateEnd ? parseDate(event.dateEnd) : start;
+  if (end < today) return 'past';
+  if (start <= today && end >= today) return 'current';
+  return 'upcoming';
+}
+
+const sorted = [...events2026].sort((a, b) => parseDate(a.date).getTime() - parseDate(b.date).getTime());
+---
+
+<section id="cronograma" class="py-24 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="section-subtitle">Mapa del año</div>
+      <h2 class="section-title">Cronograma 2026</h2>
+      <p class="text-silver-300">Todos los momentos clave del año en una línea de tiempo</p>
+    </div>
+
+    <div class="relative">
+      <!-- Vertical line -->
+      <div class="absolute left-[22px] top-0 bottom-0 w-px bg-space-700 md:left-1/2"></div>
+
+      <div class="space-y-0">
+        {sorted.map((event, idx) => {
+          const status = getStatus(event);
+          const isLeft = idx % 2 === 0;
+
+          return (
+            <div class={`relative flex items-start md:items-center gap-4 pb-8 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              <!-- Dot -->
+              <div class="absolute left-0 md:left-1/2 md:-translate-x-1/2 flex-shrink-0 z-10">
+                <div class={`w-11 h-11 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
+                  status === 'current'
+                    ? 'bg-gold-400 border-gold-300 shadow-lg shadow-gold-400/30'
+                    : status === 'past'
+                      ? 'bg-space-800 border-space-700'
+                      : event.isKey
+                        ? 'bg-space-800 border-gold-400/50'
+                        : 'bg-space-800 border-space-700'
+                }`}>
+                  {status === 'current' ? (
+                    <span class="text-space-950 font-mono text-xs font-bold">HOY</span>
+                  ) : (
+                    <span class={`font-mono text-sm ${
+                      status === 'past' ? 'text-silver-300/40' : event.isKey ? 'text-gold-400' : 'text-silver-300/60'
+                    }`}>♄</span>
+                  )}
+                </div>
+              </div>
+
+              <!-- Spacer for timeline positioning on desktop -->
+              <div class="hidden md:block w-[calc(50%-22px)] flex-shrink-0"></div>
+
+              <!-- Content card -->
+              <div class={`ml-16 md:ml-0 md:w-[calc(50%-22px)] ${
+                isLeft ? 'md:pr-8 md:text-right' : 'md:pl-8'
+              }`}>
+                <div class={`rounded-xl p-4 border transition-all duration-300 ${
+                  status === 'current'
+                    ? 'border-gold-400/60 bg-gold-400/5 glow-gold'
+                    : status === 'past'
+                      ? 'border-space-700/50 bg-space-800/40 opacity-50'
+                      : event.isKey
+                        ? 'border-gold-400/30 bg-space-800 hover:border-gold-400/50'
+                        : 'border-space-700/50 bg-space-800 hover:border-space-700'
+                }`}>
+                  <div class={`flex items-center gap-2 mb-1.5 ${isLeft ? 'md:justify-end' : ''}`}>
+                    <span class="text-silver-300/60 font-mono text-xs">
+                      {formatDate(event.date)}
+                      {event.dateEnd ? ` – ${formatDate(event.dateEnd)}` : ''}
+                    </span>
+                    {event.isKey && status !== 'past' && (
+                      <span class="text-gold-400 text-xs">✦</span>
+                    )}
+                    {status === 'current' && (
+                      <span class="badge-gold text-[10px]">HOY</span>
+                    )}
+                  </div>
+                  <h3 class={`font-serif text-base mb-1 ${
+                    status === 'past' ? 'text-silver-300/60' : event.isKey ? 'text-gold-300' : 'text-star-white'
+                  }`}>
+                    {event.title}
+                  </h3>
+                  <p class={`text-xs leading-relaxed ${status === 'past' ? 'text-silver-300/40' : 'text-silver-300/80'}`}>
+                    {event.impact}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>

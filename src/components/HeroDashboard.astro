@@ -1,0 +1,125 @@
+---
+import { events2026 } from '../data/events2026';
+
+// Find current event (today or most recent past event) and next upcoming event
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+function parseDate(dateStr: string): Date {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d;
+}
+
+// Sort events by date
+const sorted = [...events2026].sort((a, b) => parseDate(a.date).getTime() - parseDate(b.date).getTime());
+
+// Find current: most recent event that started on or before today
+let currentEvent = sorted.filter(e => parseDate(e.date) <= today).at(-1);
+
+// Find next: first event strictly after today
+const nextEvent = sorted.find(e => {
+  const start = parseDate(e.date);
+  const end = e.dateEnd ? parseDate(e.dateEnd) : start;
+  return end > today && start > today;
+});
+
+// Days to next event
+let daysToNext: number | null = null;
+if (nextEvent) {
+  const diff = parseDate(nextEvent.date).getTime() - today.getTime();
+  daysToNext = Math.ceil(diff / (1000 * 60 * 60 * 24));
+}
+---
+
+<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4 py-24 text-center">
+  <!-- Animated gradient orb -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <div class="w-[600px] h-[600px] rounded-full opacity-10"
+         style="background: radial-gradient(circle, #c9a227 0%, #6b5b95 40%, transparent 70%); filter: blur(60px);">
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-4xl mx-auto">
+    <!-- Logo / Title -->
+    <div class="mb-4">
+      <span class="text-gold-400 font-mono text-sm tracking-[0.4em] uppercase">Análisis Astrológico</span>
+    </div>
+    <h1 class="font-serif text-5xl md:text-7xl text-star-white mb-3 leading-tight">
+      Edward &amp; Martina
+    </h1>
+    <p class="text-silver-300 font-mono text-sm tracking-widest mb-12">2026 · Cartas natales verificadas · Método Placidus</p>
+
+    <!-- Today's date -->
+    <div class="card inline-block mb-10 px-8 py-4">
+      <div class="text-silver-300 text-xs font-mono uppercase tracking-widest mb-1">Hoy</div>
+      <div id="todayDate" class="font-serif text-3xl text-gold-300">Cargando...</div>
+    </div>
+
+    <!-- Status indicators -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+      <div class="badge-gold">♄ Saturno en Aries · Activo</div>
+      <div class="badge-purple">Retorno de Saturno Martina · Fase 1</div>
+      <div class="badge-gold">♃ Júpiter en Géminis</div>
+    </div>
+
+    <!-- Current + Next event cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      <!-- Current/Last event -->
+      {currentEvent && (
+        <div class="card text-left border-gold-400/30 glow-gold">
+          <div class="text-gold-400 text-xs font-mono uppercase tracking-widest mb-2">Momento actual</div>
+          <div class="font-mono text-silver-300 text-sm mb-1">{currentEvent.date.split('-').reverse().join('/')}</div>
+          <h3 class="font-serif text-xl text-star-white mb-2">{currentEvent.title}</h3>
+          <p class="text-silver-300 text-sm">{currentEvent.impact}</p>
+          {currentEvent.isKey && (
+            <div class="mt-3 flex items-center gap-1">
+              <span class="text-gold-400 text-sm">✦</span>
+              <span class="text-gold-300 text-xs font-mono">Fecha clave</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      <!-- Next event -->
+      {nextEvent && daysToNext !== null && (
+        <div class="card text-left border-nebula-purple/40">
+          <div class="text-nebula-purple text-xs font-mono uppercase tracking-widest mb-2">
+            Próximo evento · en {daysToNext} día{daysToNext !== 1 ? 's' : ''}
+          </div>
+          <div class="font-mono text-silver-300 text-sm mb-1">{nextEvent.date.split('-').reverse().join('/')}</div>
+          <h3 class="font-serif text-xl text-star-white mb-2">{nextEvent.title}</h3>
+          <p class="text-silver-300 text-sm">{nextEvent.impact}</p>
+          {nextEvent.isKey && (
+            <div class="mt-3 flex items-center gap-1">
+              <span class="text-gold-400 text-sm">✦</span>
+              <span class="text-gold-300 text-xs font-mono">Fecha clave</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="mt-16 flex flex-col items-center gap-2 text-silver-300/50">
+      <span class="text-xs font-mono tracking-widest">EXPLORAR</span>
+      <div class="w-px h-12 bg-gradient-to-b from-silver-300/50 to-transparent"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function formatDate(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return date.toLocaleDateString('es-ES', options);
+  }
+
+  const el = document.getElementById('todayDate');
+  if (el) {
+    el.textContent = formatDate(new Date());
+  }
+</script>

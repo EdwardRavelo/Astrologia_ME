@@ -1,0 +1,40 @@
+---
+import { threeQuestions } from '../data/analysis';
+---
+
+<section id="preguntas" class="py-24 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <div class="section-subtitle">Lo esencial del año</div>
+      <h2 class="section-title">Las 3 preguntas</h2>
+      <p class="text-silver-300 max-w-xl mx-auto">
+        No para responderlas ahora — sino para mantenerlas vivas mientras el año se despliega
+      </p>
+    </div>
+
+    <div class="space-y-10">
+      {threeQuestions.map((q, i) => (
+        <div class="relative">
+          <!-- Number -->
+          <div class="flex items-start gap-8">
+            <div class="flex-shrink-0 w-16 h-16 rounded-full border border-gold-400/30 flex items-center justify-center"
+                 style="background: radial-gradient(circle, rgba(201,162,39,0.1), transparent)">
+              <span class="font-serif text-2xl text-gold-400">{i + 1}</span>
+            </div>
+            <div class="flex-1 pt-2">
+              <h3 class="font-serif text-2xl md:text-3xl text-star-white mb-4 leading-tight">
+                {q.question}
+              </h3>
+              <p class="text-silver-300 leading-relaxed text-base">
+                {q.context}
+              </p>
+            </div>
+          </div>
+          {i < threeQuestions.length - 1 && (
+            <div class="mt-10 h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

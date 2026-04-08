@@ -1,0 +1,198 @@
+---
+import { edward } from '../data/edward';
+import { martina } from '../data/martina';
+
+type Person = typeof edward;
+
+const people = [edward, martina];
+---
+
+<section id="cartas" class="py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <div class="section-subtitle">Astrología natal</div>
+      <h2 class="section-title">Cartas Natales</h2>
+      <p class="text-silver-300 max-w-xl mx-auto">Posiciones verificadas · Método Placidus · carta-natal.es</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-center gap-2 mb-10" id="natalTabs">
+      {people.map((p, i) => (
+        <button
+          data-tab={i}
+          class={`tab-btn px-6 py-3 rounded-xl font-mono text-sm tracking-widest uppercase transition-all duration-300 ${i === 0 ? 'bg-gold-400/20 text-gold-300 border border-gold-400/40' : 'text-silver-300 border border-space-700 hover:border-gold-400/20 hover:text-star-white'}`}
+        >
+          {p.name.split(' ')[0]}
+        </button>
+      ))}
+    </div>
+
+    <!-- Content panels -->
+    {people.map((p, personIdx) => (
+      <div
+        data-panel={personIdx}
+        class={`natal-panel ${personIdx !== 0 ? 'hidden' : ''}`}
+      >
+        <!-- Birth info -->
+        <div class="card mb-6 flex flex-wrap gap-4 items-center justify-between">
+          <div>
+            <div class="text-silver-300 text-xs font-mono uppercase tracking-widest mb-1">Nacimiento</div>
+            <div class="font-serif text-xl text-star-white">{p.name}</div>
+            <div class="text-silver-300 text-sm font-mono">{p.birthDate} · {p.birthTime} · {p.birthPlace}</div>
+          </div>
+          <div class="flex gap-6">
+            <div class="text-center">
+              <div class="text-gold-400 text-xs font-mono uppercase tracking-widest mb-1">ASC</div>
+              <div class="font-mono text-star-white text-sm">{p.houses[0].cusp}</div>
+            </div>
+            <div class="text-center">
+              <div class="text-gold-400 text-xs font-mono uppercase tracking-widest mb-1">MC</div>
+              <div class="font-mono text-star-white text-sm">{p.houses[9].cusp}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Planets table -->
+          <div class="lg:col-span-2 card overflow-x-auto">
+            <h3 class="font-serif text-xl text-star-white mb-4">Posiciones Planetarias</h3>
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-space-700">
+                  <th class="text-left py-2 text-silver-300 font-mono text-xs uppercase tracking-widest">Planeta</th>
+                  <th class="text-left py-2 text-silver-300 font-mono text-xs uppercase tracking-widest">Posición</th>
+                  <th class="text-center py-2 text-silver-300 font-mono text-xs uppercase tracking-widest">Casa</th>
+                  <th class="text-left py-2 text-silver-300 font-mono text-xs uppercase tracking-widest">Nota</th>
+                </tr>
+              </thead>
+              <tbody>
+                {p.planets.map((planet) => (
+                  <tr class="border-b border-space-700/50 hover:bg-space-700/30 transition-colors">
+                    <td class="py-2.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-gold-400 font-mono text-lg w-6">{planet.symbol}</span>
+                        <span class="text-star-white">{planet.name}</span>
+                      </div>
+                    </td>
+                    <td class="py-2.5 font-mono text-gold-300 text-sm">{planet.position}</td>
+                    <td class="py-2.5 text-center">
+                      <span class="text-silver-300 font-mono text-sm">{planet.house}</span>
+                    </td>
+                    <td class="py-2.5">
+                      {planet.notes && (
+                        <span class="text-amber-400 text-xs font-mono">{planet.notes}</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right column: Elements + Modalities + Houses -->
+          <div class="space-y-5">
+            <!-- Elements -->
+            <div class="card">
+              <h3 class="font-serif text-lg text-star-white mb-4">Elementos</h3>
+              <div class="space-y-3">
+                {p.elements.map((el) => (
+                  <div>
+                    <div class="flex justify-between mb-1">
+                      <span class="text-silver-300 text-sm">{el.name}</span>
+                      <span class="font-mono text-gold-300 text-sm">{el.pct}%</span>
+                    </div>
+                    <div class="h-1.5 bg-space-700 rounded-full overflow-hidden">
+                      <div
+                        class="h-full rounded-full bg-gradient-to-r from-gold-400 to-gold-300"
+                        style={`width: ${el.pct}%`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Modalities -->
+            <div class="card">
+              <h3 class="font-serif text-lg text-star-white mb-4">Modalidades</h3>
+              <div class="space-y-3">
+                {p.modalities.map((mod) => (
+                  <div>
+                    <div class="flex justify-between mb-1">
+                      <span class="text-silver-300 text-sm">{mod.name}</span>
+                      <span class="font-mono text-gold-300 text-sm">{mod.pct}%</span>
+                    </div>
+                    <div class="h-1.5 bg-space-700 rounded-full overflow-hidden">
+                      <div
+                        class="h-full rounded-full bg-gradient-to-r from-nebula-purple to-purple-400"
+                        style={`width: ${mod.pct}%`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Key aspects -->
+            <div class="card">
+              <h3 class="font-serif text-lg text-star-white mb-4">Aspectos clave</h3>
+              <div class="space-y-2">
+                {p.keyAspects.map((asp) => (
+                  <div class={`flex items-start gap-2 p-2 rounded-lg ${asp.type === 'harmonic' ? 'bg-emerald-900/10' : asp.type === 'tension' ? 'bg-red-900/10' : 'bg-space-700/30'}`}>
+                    <span class={`mt-0.5 text-sm ${asp.type === 'harmonic' ? 'text-emerald-400' : asp.type === 'tension' ? 'text-red-400' : 'text-silver-300'}`}>
+                      {asp.type === 'harmonic' ? '△' : asp.type === 'tension' ? '□' : '☌'}
+                    </span>
+                    <div>
+                      <div class="text-star-white text-xs">{asp.p1} {asp.aspect} {asp.p2}</div>
+                      <div class="text-silver-300 text-xs">{asp.note}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Houses grid -->
+        <div class="card mt-6">
+          <h3 class="font-serif text-xl text-star-white mb-4">Cúspides de Casas (Placidus)</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {p.houses.map((h) => (
+              <div class="bg-space-700/40 rounded-lg p-3 text-center">
+                <div class="text-gold-400 font-mono text-xs mb-1">
+                  Casa {h.house}{h.label ? ` · ${h.label}` : ''}
+                </div>
+                <div class="text-star-white font-mono text-xs">{h.cusp}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const panels = document.querySelectorAll<HTMLElement>('.natal-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const idx = tab.dataset.tab;
+
+      tabs.forEach((t) => {
+        t.classList.remove('bg-gold-400/20', 'text-gold-300', 'border-gold-400/40');
+        t.classList.add('text-silver-300', 'border-space-700');
+      });
+      tab.classList.add('bg-gold-400/20', 'text-gold-300', 'border-gold-400/40');
+      tab.classList.remove('text-silver-300', 'border-space-700');
+
+      panels.forEach((panel) => {
+        panel.classList.add('hidden');
+        if (panel.dataset.panel === idx) {
+          panel.classList.remove('hidden');
+        }
+      });
+    });
+  });
+</script>

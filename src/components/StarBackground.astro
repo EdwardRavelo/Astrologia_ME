@@ -1,0 +1,61 @@
+---
+---
+<div class="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+  <canvas id="starCanvas" class="w-full h-full opacity-60"></canvas>
+</div>
+
+<script>
+const canvas = document.getElementById('starCanvas') as HTMLCanvasElement;
+const ctx = canvas.getContext('2d')!;
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+interface Star {
+  x: number;
+  y: number;
+  r: number;
+  alpha: number;
+  delta: number;
+}
+
+const stars: Star[] = [];
+
+function createStars() {
+  stars.length = 0;
+  const count = Math.floor((canvas.width * canvas.height) / 3000);
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + 0.2,
+      alpha: Math.random(),
+      delta: (Math.random() - 0.5) * 0.008,
+    });
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (const s of stars) {
+    s.alpha += s.delta;
+    if (s.alpha <= 0 || s.alpha >= 1) s.delta *= -1;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(232, 224, 213, ${s.alpha})`;
+    ctx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+
+resize();
+createStars();
+draw();
+
+window.addEventListener('resize', () => {
+  resize();
+  createStars();
+});
+</script>

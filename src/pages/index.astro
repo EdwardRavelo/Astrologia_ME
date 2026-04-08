@@ -1,0 +1,168 @@
+---
+import StarBackground from '../components/StarBackground.astro';
+import HeroDashboard from '../components/HeroDashboard.astro';
+import PlanetaryToday from '../components/PlanetaryToday';
+import NatalChart from '../components/NatalChart.astro';
+import Synastry from '../components/Synastry.astro';
+import SaturnReturn from '../components/SaturnReturn.astro';
+import Timeline from '../components/Timeline.astro';
+import MonthlyAnalysis from '../components/MonthlyAnalysis.astro';
+import ThreeQuestions from '../components/ThreeQuestions.astro';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Análisis astrológico personal — Edward & Martina 2026" />
+    <title>Edward & Martina · Astrología 2026</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♄</text></svg>" />
+  </head>
+  <body class="bg-space-950 text-star-white overflow-x-hidden">
+    <!-- Stars background -->
+    <StarBackground />
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-space-950/80 border-b border-space-700/50">
+      <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <div class="font-serif text-lg text-gold-300">E & M · 2026</div>
+        <div class="hidden md:flex items-center gap-6">
+          {[
+            { href: '#hero', label: 'Hoy' },
+            { href: '#planetas', label: 'Planetas' },
+            { href: '#cartas', label: 'Cartas' },
+            { href: '#sinastria', label: 'Sinastría' },
+            { href: '#saturno', label: 'Saturno' },
+            { href: '#cronograma', label: 'Cronograma' },
+            { href: '#analisis', label: 'Análisis' },
+            { href: '#preguntas', label: 'Preguntas' },
+          ].map(link => (
+            <a
+              href={link.href}
+              class="text-silver-300 hover:text-gold-300 text-sm font-mono tracking-wide transition-colors duration-200"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+        <!-- Mobile menu button -->
+        <button
+          id="mobileMenuBtn"
+          class="md:hidden text-silver-300 hover:text-star-white"
+          aria-label="Menú"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="hidden md:hidden bg-space-800 border-t border-space-700 px-4 py-4">
+        <div class="flex flex-col gap-3">
+          {[
+            { href: '#hero', label: 'Hoy' },
+            { href: '#planetas', label: 'Planetas del día' },
+            { href: '#cartas', label: 'Cartas natales' },
+            { href: '#sinastria', label: 'Sinastría' },
+            { href: '#saturno', label: 'Retorno de Saturno' },
+            { href: '#cronograma', label: 'Cronograma 2026' },
+            { href: '#analisis', label: 'Análisis mensual' },
+            { href: '#preguntas', label: 'Las 3 preguntas' },
+          ].map(link => (
+            <a
+              href={link.href}
+              class="mobile-nav-link text-silver-300 hover:text-gold-300 text-sm font-mono tracking-wide transition-colors duration-200 py-1"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="relative z-10">
+      <HeroDashboard />
+
+      <!-- Planetary positions -->
+      <section id="planetas" class="py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <div class="section-subtitle">Cielo de hoy</div>
+            <h2 class="section-title">Posiciones Planetarias</h2>
+            <p class="text-silver-300 max-w-xl mx-auto">Calculado en tiempo real para la fecha y hora actual</p>
+          </div>
+          <PlanetaryToday client:load />
+          <p class="text-silver-300/40 text-xs font-mono text-center mt-6">
+            Cálculo aproximado mediante algoritmos VSOP87 simplificados · Error máximo ±2°
+          </p>
+        </div>
+      </section>
+
+      <!-- Section divider -->
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
+
+      <NatalChart />
+
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
+
+      <Synastry />
+
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
+
+      <SaturnReturn />
+
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
+
+      <Timeline />
+
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
+
+      <MonthlyAnalysis />
+
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
+
+      <ThreeQuestions />
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-space-700/50 py-10 px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="font-serif text-2xl text-gold-400 mb-2">♄</div>
+        <div class="text-silver-300/60 text-sm font-mono">
+          Edward & Martina · Análisis astrológico 2026
+        </div>
+        <div class="text-silver-300/30 text-xs font-mono mt-2">
+          Cartas verificadas · Método Placidus · Abril 2026
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const btn = document.getElementById('mobileMenuBtn');
+      const menu = document.getElementById('mobileMenu');
+      btn?.addEventListener('click', () => {
+        menu?.classList.toggle('hidden');
+      });
+      // Close on nav click
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => menu?.classList.add('hidden'));
+      });
+    </script>
+  </body>
+</html>

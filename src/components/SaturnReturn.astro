@@ -1,0 +1,227 @@
+---
+// Calculate Saturn Return progress for Martina
+// Phase 1: Apr 7 – Jul 26, 2026
+// Phase 2: Jul 26 – Nov 1, 2026 (retrograde)
+// Phase 3: Nov 1 – Dec 31, 2026 (exact conjunction)
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const PHASES = [
+  {
+    num: 1,
+    name: 'El inicio de la presión',
+    start: new Date('2026-04-07'),
+    end: new Date('2026-07-26'),
+    description: 'Saturno avanza hacia 27° Aries. La presión es palpable aunque no sea exacta. Las preguntas sobre el hogar, la convivencia y la dirección de vida se vuelven urgentes.',
+  },
+  {
+    num: 2,
+    name: 'La revisión interna',
+    start: new Date('2026-07-26'),
+    end: new Date('2026-11-01'),
+    description: 'Saturno en retrogradación. Fase de revisión real: qué construyó, qué quiere conservar, qué tiene que soltar. Mayor trabajo psicológico e introspección.',
+  },
+  {
+    num: 3,
+    name: 'La conjunción exacta',
+    start: new Date('2026-11-01'),
+    end: new Date('2026-12-31'),
+    description: 'Saturno alcanza 27° Aries. Momento cumbre del retorno, coincide con el cumpleaños 28. No es un momento de crisis sino de aterrizaje y consolidación.',
+  },
+];
+
+// Calculate overall progress (from Apr 7 to Dec 31)
+const returnStart = new Date('2026-04-07');
+const returnEnd = new Date('2026-12-31');
+const totalDuration = returnEnd.getTime() - returnStart.getTime();
+
+function clamp(val: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, val));
+}
+
+const overallProgress = clamp(
+  ((today.getTime() - returnStart.getTime()) / totalDuration) * 100,
+  0, 100
+);
+
+// Determine current phase
+function getPhaseStatus(phase: typeof PHASES[0]) {
+  if (today < phase.start) return 'upcoming';
+  if (today > phase.end) return 'done';
+  return 'active';
+}
+
+function phaseProgress(phase: typeof PHASES[0]) {
+  const dur = phase.end.getTime() - phase.start.getTime();
+  return clamp(((today.getTime() - phase.start.getTime()) / dur) * 100, 0, 100);
+}
+---
+
+<section id="saturno" class="py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <div class="section-subtitle">Tránsito mayor</div>
+      <h2 class="section-title">Retorno de Saturno</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Edward: completed -->
+      <div class="card border-space-700">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-full bg-gold-400/20 flex items-center justify-center border border-gold-400/30">
+            <span class="text-gold-400 font-mono">♄</span>
+          </div>
+          <div>
+            <div class="text-gold-300 font-serif text-xl">Edward</div>
+            <div class="text-silver-300 text-xs font-mono">2021–2022 · Completado</div>
+          </div>
+          <div class="ml-auto badge-gold">✓ Completado</div>
+        </div>
+
+        <div class="mb-4">
+          <div class="text-silver-300 text-xs font-mono uppercase tracking-widest mb-2">Saturno natal</div>
+          <div class="font-mono text-gold-300">29° Acuario · Casa 5 · Retrógrado</div>
+        </div>
+
+        <div class="mb-5">
+          <div class="text-silver-300 text-xs font-mono uppercase tracking-widest mb-3">Lo que el retorno dejó</div>
+          <div class="space-y-2">
+            {[
+              'Mayor claridad sobre qué tipo de amor y vínculo quiere',
+              'La relación con Martina consolidada en ese período',
+              'Estructura de vida más definida: rol de Capacitador Regional',
+              'Mayor capacidad de comprometerse sin sentirlo como pérdida',
+            ].map((item) => (
+              <div class="flex items-start gap-2">
+                <span class="text-gold-400 mt-1 text-xs">✦</span>
+                <span class="text-silver-300 text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="bg-amber-900/10 border border-amber-700/20 rounded-lg p-4">
+          <div class="text-amber-400 text-xs font-mono uppercase tracking-widest mb-2">Conexión con el presente</div>
+          <p class="text-silver-300 text-sm leading-relaxed">
+            El eclipse del 17 de febrero de 2026 en 28° Acuario reactivó exactamente el punto del retorno.
+            Lo que quedó en proceso volvió al primer plano con urgencia.
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <div class="text-silver-300 text-xs font-mono uppercase tracking-widest mb-3">Las 4 preguntas que planteó</div>
+          <ol class="space-y-1">
+            {[
+              '¿Qué tipo de amor quiero construir?',
+              '¿Puedo comprometerme sin perder mi independencia?',
+              '¿Mi creatividad tiene lugar real en mi vida?',
+              '¿Pertenezco a los grupos en los que estoy?',
+            ].map((q, i) => (
+              <li class="flex items-start gap-2">
+                <span class="text-gold-400 font-mono text-sm">{i + 1}.</span>
+                <span class="text-silver-300 text-sm italic">{q}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      <!-- Martina: in progress -->
+      <div class="card border-nebula-purple/40 glow-purple">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-full bg-nebula-purple/30 flex items-center justify-center border border-nebula-purple/50">
+            <span class="text-purple-300 font-mono">♄</span>
+          </div>
+          <div>
+            <div class="text-purple-300 font-serif text-xl">Martina</div>
+            <div class="text-silver-300 text-xs font-mono">2026 · En curso</div>
+          </div>
+          <div class="ml-auto badge-purple">En curso</div>
+        </div>
+
+        <div class="mb-4">
+          <div class="text-silver-300 text-xs font-mono uppercase tracking-widest mb-2">Saturno natal</div>
+          <div class="font-mono text-purple-300">27° Aries · Casa 4 · Retrógrado</div>
+        </div>
+
+        <!-- Overall progress bar -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-silver-300 text-xs font-mono uppercase tracking-widest">Progreso total</span>
+            <span class="text-purple-300 font-mono text-sm">{overallProgress.toFixed(0)}%</span>
+          </div>
+          <div class="h-2 bg-space-700 rounded-full overflow-hidden">
+            <div
+              class="h-full rounded-full transition-all duration-1000"
+              style={`width: ${overallProgress}%; background: linear-gradient(90deg, #6b5b95, #a78bfa)`}
+            />
+          </div>
+          <div class="flex justify-between mt-1">
+            <span class="text-silver-300/50 text-xs font-mono">7 Abr</span>
+            <span class="text-silver-300/50 text-xs font-mono">31 Dic</span>
+          </div>
+        </div>
+
+        <!-- Phases -->
+        <div class="space-y-4">
+          {PHASES.map((phase) => {
+            const status = getPhaseStatus(phase);
+            const progress = phaseProgress(phase);
+            return (
+              <div class={`rounded-xl p-4 border transition-all duration-300 ${
+                status === 'active'
+                  ? 'border-nebula-purple/60 bg-nebula-purple/10'
+                  : status === 'done'
+                    ? 'border-space-700/40 opacity-60'
+                    : 'border-space-700/40'
+              }`}>
+                <div class="flex items-center justify-between mb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono border ${
+                      status === 'active'
+                        ? 'bg-nebula-purple border-nebula-purple text-white'
+                        : status === 'done'
+                          ? 'bg-space-700 border-space-700 text-silver-300'
+                          : 'border-space-700 text-silver-300/50'
+                    }`}>{phase.num}</span>
+                    <span class={`font-serif text-base ${status === 'active' ? 'text-star-white' : 'text-silver-300'}`}>
+                      {phase.name}
+                    </span>
+                  </div>
+                  {status === 'active' && (
+                    <span class="badge-purple text-[10px]">Activa</span>
+                  )}
+                  {status === 'done' && (
+                    <span class="text-silver-300/50 text-xs font-mono">✓</span>
+                  )}
+                </div>
+                <div class="text-silver-300/60 text-xs font-mono mb-2">
+                  {phase.start.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' })} –
+                  {' '}{phase.end.toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </div>
+                {status === 'active' && (
+                  <div class="h-1 bg-space-700 rounded-full overflow-hidden mb-2">
+                    <div
+                      class="h-full rounded-full bg-gradient-to-r from-nebula-purple to-purple-400"
+                      style={`width: ${progress.toFixed(0)}%`}
+                    />
+                  </div>
+                )}
+                <p class="text-silver-300 text-xs leading-relaxed">{phase.description}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <!-- Key insight -->
+        <div class="mt-5 p-4 bg-space-800 rounded-xl border border-space-700/50">
+          <p class="text-silver-300 text-sm italic leading-relaxed text-center">
+            "Edward ya cruzó el río. Martina está cruzándolo ahora.
+            Están en la misma orilla de destino — pero ella todavía está en el agua."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

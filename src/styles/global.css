@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-space-950 text-star-white font-sans;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-space-800 border border-space-700 rounded-xl p-6;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300 hover:border-gold-400/40 hover:shadow-lg hover:shadow-gold-400/5;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl text-star-white mb-2;
+  }
+
+  .section-subtitle {
+    @apply text-silver-300 text-sm tracking-widest uppercase mb-8;
+  }
+
+  .badge {
+    @apply inline-block px-3 py-1 text-xs font-mono rounded-full border;
+  }
+
+  .badge-gold {
+    @apply badge bg-gold-400/10 text-gold-300 border-gold-400/30;
+  }
+
+  .badge-purple {
+    @apply badge bg-nebula-purple/20 text-purple-300 border-nebula-purple/40;
+  }
+
+  .planet-symbol {
+    @apply font-mono text-2xl text-gold-400;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #c9a227, #e8c96b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(201, 162, 39, 0.15);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(107, 91, 149, 0.2);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Accordion animation */
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
