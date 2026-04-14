@@ -2,6 +2,7 @@
 import StarBackground from '../components/StarBackground.astro';
 import HeroDashboard from '../components/HeroDashboard.astro';
 import PlanetaryToday from '../components/PlanetaryToday';
+import DailyReport from '../components/DailyReport';
 import NatalChart from '../components/NatalChart.astro';
 import Synastry from '../components/Synastry.astro';
 import SaturnReturn from '../components/SaturnReturn.astro';
@@ -31,6 +32,7 @@ import '../styles/global.css';
         <div class="hidden md:flex items-center gap-6">
           {[
             { href: '#hero', label: 'Hoy' },
+            { href: '#reporte', label: 'Reporte' },
             { href: '#planetas', label: 'Planetas' },
             { href: '#cartas', label: 'Cartas' },
             { href: '#sinastria', label: 'Sinastría' },
@@ -71,6 +73,7 @@ import '../styles/global.css';
         <div class="flex flex-col gap-3">
           {[
             { href: '#hero', label: 'Hoy' },
+            { href: '#reporte', label: 'Reporte diario' },
             { href: '#planetas', label: 'Planetas del día' },
             { href: '#cartas', label: 'Cartas natales' },
             { href: '#sinastria', label: 'Sinastría' },
@@ -93,6 +96,18 @@ import '../styles/global.css';
     <!-- Main content -->
     <main class="relative z-10">
       <HeroDashboard />
+
+      <!-- Daily report -->
+      <section id="reporte" class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+          <DailyReport client:load />
+        </div>
+      </section>
+
+      <!-- Section divider -->
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="h-px bg-gradient-to-r from-transparent via-space-700 to-transparent" />
+      </div>
 
       <!-- Planetary positions -->
       <section id="planetas" class="py-24 px-4">
